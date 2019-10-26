@@ -18,10 +18,5 @@ export default {
     headers['Content-Type'] = 'application/json';
     let response = await axios.patch(`users/${id}`, { user: { name: name, college: college, company: company, description: description } }, { headers: headers })
     return response.data;
-  },
-  async setGeolocation(id, lat, lon) {
-    let response = await axios.patch(`users/${id}`, { user: { latitude: lat, longitude: lon } },
-                                                    { headers: store.getters['accountHeaders'] })
-    return response.data;
   }
 }

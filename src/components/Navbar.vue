@@ -8,7 +8,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation" v-else>
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <h1 class="has-text-white title">OnebitTinder</h1>
+          <h1 class="has-text-white title">Pecker</h1>
         </a>
       </div>
     </nav>

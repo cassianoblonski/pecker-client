@@ -1,11 +1,9 @@
 <template>
   <div>
     <div>
-      <swiper>
-        <swiperSlide v-for="photo in currentUser.photos" :key="photo.url">
-          <img :src="photo.url">
-        </swiperSlide>
-      </swiper>
+      <div class="is-centered">
+        <img src="https://s2.glbimg.com/OJS3osgGeyOvQjjqlx72C8yny-k=/0x207:720x908/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/r/E/E4zhBRQsOXk31sd8brnQ/indice.jpg" />
+      </div>
 
       <div class="columns is-mobile is-gapless is-centered action-buttons" v-if="isLoggedUser">
         <div class="column is-12">
@@ -26,6 +24,11 @@
       <div class="columns is-mobile is-gapless is-multiline user-info">
         <div class="column is-8">
           <h5 class="is-size-3"><strong>{{ currentUser.name }}</strong></h5>
+          <div class="column is-12">
+            <h5 class="is-size-6 has-text-grey " v-if="currentUser.description">
+              "{{ currentUser.description }}"
+            </h5>
+          </div>
           <h5 class="is-size-5 has-text-grey">
             <strong><i class="fas fa-building"></i></strong>
             {{ currentUser.company }}
@@ -35,18 +38,14 @@
             {{ currentUser.college }}
           </h5>
         </div>
-        <div class="column is-4 distance" v-if="currentUser.distance">
-          <h4 class="has-text-right is-size-6">
-            <strong class="has-text-danger">{{ currentUser.distance }}km </strong>
-            <i class="fas fa-map-marker-alt has-text-grey"></i>
-          </h4>
-        </div>
-        <div class="column is-12 has-text-centered">
-          <h5 class="is-size-6 has-text-grey description" v-if="currentUser.description">
-            "{{ currentUser.description }}"
-          </h5>
-        </div>
       </div>
+    </div>
+    <div class="column is-12 has-text-centered" v-if="isLoggedUser">
+      <button class="button has-background-danger" @click="logout()">
+        <span class="is-size-6 has-text-white">
+          Encerrar Sessão
+        </span>
+      </button>
     </div>
   </div>
 </template>
@@ -88,15 +87,13 @@
 
 <script>
   import "swiper/dist/css/swiper.css";
-  import { swiper, swiperSlide } from 'vue-awesome-swiper';
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import router from '../router';
+  import store from "../store";
   import UserService from '../services/user_service';
 
   export default {
     components: {
-      swiper,
-      swiperSlide
     },
 
     props: ['user'],
@@ -109,21 +106,31 @@
     },
 
     computed: {
+      loggedIn() {
+        return store.getters["isLoggedIn"];
+      },
       ...mapState({
         account: state => state.Account.account
       })
     },
-  
+
+    created(){
+      this.checkLogin(this.loggedIn);
+    },
+
     mounted() {
-      if(!this.user) { 
+      if(!this.user) {
         this.loadLoggedUser();
       } else {
         this.currentUser = this.user;
       }
     },
     watch:{
+      loggedIn(newValue) {
+        this.checkLogin(newValue);
+      },
       $route (){
-        if(!this.user) { 
+        if(!this.user) {
           this.loadLoggedUser();
         } else {
           this.currentUser = this.user;
@@ -131,6 +138,11 @@
       }
     },
     methods: {
+      checkLogin(loggedIn) {
+        if (!loggedIn) {
+          router.push("/login");
+        }
+      },
       loadLoggedUser() {
         UserService.load(this.account.id).then(user => {
           this.currentUser = user;
@@ -140,7 +152,8 @@
 
       backToPreviousPage() {
         router.go(-1);
-      }
+      },
+      ...mapActions(["logout"])
     }
   }
 </script>

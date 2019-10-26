@@ -6,9 +6,9 @@
           <i class="fas fa-info fa-xs"></i>
         </button>
       </div>
-      
+
       <div class="has-text-centered">
-        <img :src="user.default_photo_url" />
+        <img src="https://s2.glbimg.com/OJS3osgGeyOvQjjqlx72C8yny-k=/0x207:720x908/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/r/E/E4zhBRQsOXk31sd8brnQ/indice.jpg" />
       </div>
 
       <div class="columns is-mobile is-gapless">
@@ -57,7 +57,7 @@
       margin-top: 0.5rem;
     }
   }
-    
+
   footer.footer {
     background: transparent;
     margin-top: 5rem;
@@ -108,7 +108,7 @@
 
   export default {
     computed: {
-      ...mapState('Match', { 
+      ...mapState('Match', {
         user: state => state.currentSelection
       })
     },

@@ -1,13 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store';
-import Home from './views/Home';
-import Login from './views/Login';
-import SignUp from './views/SignUp';
+import Home from './views/Home.vue';
+import Login from './views/Login.vue';
+import SignUp from './views/SignUp.vue';
 import UserShow from './views/UserShow';
 import ChatList from './views/ChatList';
 import UserEdit from './views/UserEdit';
-import BlockGeolocation from './views/BlockGeolocation';
 
 
 Vue.use(Router);
@@ -43,45 +42,31 @@ const router = new Router({
       component: UserShow
     },
     {
-      path: '/profile/edit',
-      name: 'user_edit',
-      component: UserEdit
-    },
-    {
       path: '/chats',
       name: 'chats',
       component: ChatList
     },
     {
-      path: '/block-geolocation',
-      name: 'block_geolocation',
-      component: BlockGeolocation
-    }  
+      path: '/profile/edit',
+      name: 'user_edit',
+      component: UserEdit
+    }
   ],
 });
 
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/sign-up', '/block-geolocation'];
+  const publicPages = ['/login', '/sign-up'];
   const authRequired = !publicPages.includes(to.path);
-  const isGeolocationEnabled = store.getters['isGeolocationEnabled'];
 
-  if(authRequired) {
-    store.dispatch("loadLocalAccount");
-    let loggedIn = store.getters['isLoggedIn'];
+  store.dispatch("loadLocalAccount");
+  let loggedIn = store.getters['isLoggedIn'];
 
-    if (!loggedIn) {
-      return next({
-        path: '/login',
-        query: { returnUrl: to.path }
-      });
-    }
-
-    if (to.path != '/block-geolocation' && !isGeolocationEnabled) {
-      return next({
-        path: '/block-geolocation'
-      });
-    }
+  if(authRequired && !loggedIn) {
+    return next({
+      path: '/login',
+      query: { returnUrl: to.path }
+    });
   }
 
   next();
