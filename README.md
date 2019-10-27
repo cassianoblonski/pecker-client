@@ -12,7 +12,7 @@ O tinder para rinha de galos, digo, relacionamento entre galos. Encontre o par p
 
 Se você não sabe ou ainda não conhece aplicativos de relacionamentos de uma conferida nesse nosso artigo falando sobre o Tinder e outros apps que influenciaram o Pecker.
 
-[Conheça mais sobre os apps de relacionamento e o Pecker]()
+[Conheça mais sobre os apps de relacionamento e o Pecker](https://github.com/cassianoblonski/pecker-client/blob/master/conhe%C3%A7a_mais.md)
 
 
 
