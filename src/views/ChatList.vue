@@ -1,27 +1,13 @@
 <template>
   <div class="columns">
     <div class="column is-full">
-      <h1 class="subtitle has-text-centered">Chats</h1>
-      <swiper :options="swiperOptions" v-if="chats.length > 0">
-        <swiperSlide v-for="chat in chats" :key="chat.id">
-          <img :src="chat.matchee_photo_url" @click="openMenu(chat, 'chats')" />
-        </swiperSlide>    
 
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
-
-      <p class="has-text-centered" v-else>Não há nenhum Chat iniciado</p>
-    </div>
-
-    <br /><br />
-
-    <div class="column is-full">
       <h1 class="subtitle has-text-centered">Matches</h1>
       <swiper :options="swiperOptions" v-if="matches.length > 0">
         <swiperSlide v-for="match in matches" :key="match.id">
-          <img :src="match.matchee_photo_url" @click="openMenu(match, 'matches')" />
-        </swiperSlide>    
+          <h1 class="has-text-centered">{{ match.name }}</h1>
+          <img src="https://s2.glbimg.com/OJS3osgGeyOvQjjqlx72C8yny-k=/0x207:720x908/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/r/E/E4zhBRQsOXk31sd8brnQ/indice.jpg" @click="openMenu(match, 'matches')" />
+        </swiperSlide>
 
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
@@ -34,14 +20,6 @@
       <div class="card">
         <div class="card-content">
           <div class="content">
-            <div v-if="currentItem.type == 'matches'">
-              <a @click="startChat()">Iniciar chat</a>
-              <hr />
-            </div>
-            <div v-if="currentItem.type == 'chats'">
-              <a @click="startChat()">Ir para Chat</a>
-              <hr />
-            </div>
             <a @click="unmatch()">Desfazer Match</a>
           </div>
         </div>
@@ -56,7 +34,7 @@
     margin: 5%;
     display: inline-block;
     text-align: center;
-    
+
     img {
       width: 80%;
       height: 5rem;
@@ -81,7 +59,6 @@
 
   import { swiper, swiperSlide } from 'vue-awesome-swiper';
   import MatchService from '../services/match_service';
-  import ChatService from '../services/chat_service';
 
   export default {
     components: {
@@ -126,11 +103,6 @@
         })
       },
 
-      loadChats() {
-        ChatService.load().then(chats => {
-          this.chats = chats;
-        })
-      },
       unmatch() {
         MatchService.unmatch(this.currentItem).then(() => {
           let type = this.currentItem.type

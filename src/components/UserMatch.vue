@@ -6,27 +6,20 @@
           <i class="fas fa-info fa-xs"></i>
         </button>
       </div>
-      
+
       <div class="has-text-centered">
-        <img :src="user.default_photo_url" />
+        <img src="https://s2.glbimg.com/OJS3osgGeyOvQjjqlx72C8yny-k=/0x207:720x908/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2018/r/E/E4zhBRQsOXk31sd8brnQ/indice.jpg" />
       </div>
 
       <div class="columns is-mobile is-gapless">
         <div class="column is-8">
           <h5 class="is-size-4"><strong>{{ user.name }}</strong></h5>
           <h5 class="has-text-grey">
-            <strong><i class="fas fa-university"></i></strong>
-            {{ user.college }}
+            <strong><i class="fas fa-city"></i></strong>
+            {{ user.city }}
           </h5>
         </div>
-        <div class="column is-4 distance">
-          <h4 class="has-text-right is-size-6">
-            <strong class="has-text-danger">{{ user.distance }}km </strong>
-            <i class="fas fa-map-marker-alt has-text-grey"></i>
-          </h4>
-        </div>
       </div>
-
       <footer class="footer">
         <div class="columns is-mobile has-text-centered like-buttons">
           <div class="column is-6">
@@ -57,7 +50,7 @@
       margin-top: 0.5rem;
     }
   }
-    
+
   footer.footer {
     background: transparent;
     margin-top: 5rem;
@@ -108,7 +101,7 @@
 
   export default {
     computed: {
-      ...mapState('Match', { 
+      ...mapState('Match', {
         user: state => state.currentSelection
       })
     },

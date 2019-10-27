@@ -1,23 +1,18 @@
 <template>
   <div>
-    <UserPhoto />
     <div class="columns is-mobile is-multiline">
       <div class="column is-12">
         <form @submit.prevent="update()">
           <b-field label="Nome">
-            <b-input v-model="account.name" />  
-          </b-field>    
-        
-          <b-field label="Educação">
-            <b-input v-model="account.college" />  
+            <b-input v-model="account.name" />
           </b-field>
 
-          <b-field label="Empresa">
-            <b-input v-model="account.company" />
+          <b-field label="Educação">
+            <b-input v-model="account.city" />
           </b-field>
 
           <b-field label="Descrição">
-            <b-input type="textarea" v-model="account.description" />  
+            <b-input type="textarea" v-model="account.description" />
           </b-field>
 
           <input type="submit" class="button is-fullwidth has-text-white" value="Atualizar">
@@ -43,12 +38,8 @@
   import { mapState } from 'vuex';
   import store from '../store';
   import router from '../router';
-  import UserPhoto from '../components/UserPhoto';
-  
+
   export default {
-    components: {
-      UserPhoto
-    },
     computed: {
       ...mapState({
         account: state => state.Account.account
@@ -63,11 +54,10 @@
 
     methods: {
       update() {
-        store.dispatch("updateAccount", 
-          { 
+        store.dispatch("updateAccount",
+          {
             name: this.account.name,
-            college: this.account.college, 
-            company: this.account.company, 
+            city: this.account.city,
             description: this.account.description
           }
         )
