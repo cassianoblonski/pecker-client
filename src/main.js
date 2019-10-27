@@ -10,7 +10,10 @@ import '@fortawesome/fontawesome-free/css/all.css';
 
 Vue.use(Buefy);
 
+// URL para rodar a api localmente
 // axios.defaults.baseURL = 'http://localhost:3000/api/v1';
+
+// URL da api em prod no heroku
 axios.defaults.baseURL = 'https://pecker-api.herokuapp.com/api/v1';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
